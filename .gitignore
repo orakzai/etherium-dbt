@@ -1,0 +1,18 @@
+# Python virtual environment
+venv/
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# dbt artifacts (generated under eth/)
+target/
+dbt_packages/
+logs/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+*.log
