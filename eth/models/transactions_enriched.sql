@@ -18,14 +18,14 @@ end as transaction_category
 
 
  from
-  {{ source('eth', 'transactions') }} t
+    {{ ref('stg_transactions') }} t
 
   left join 
    
   (
     select transaction_hash, count(*) as token_transfers_count
     from
-    {{ source('eth', 'token_transfers') }} 
+        {{ ref('stg_token_transfers') }}
     group by transaction_hash
   ) tt
     on t.hash = tt.transaction_hash
