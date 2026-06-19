@@ -1,3 +1,5 @@
+{{ config(materialized='incremental', incremental_strategy='merge', unique_key='hash') }}
+
 select 
 
 hash,
@@ -12,3 +14,7 @@ input
 from 
 
 {{ source('eth', 'transactions') }}
+{% if is_incremental() %}
+
+where date >= (select max(date) from {{this}} )
+{% endif %}
