@@ -1,7 +1,7 @@
 select 
 date,
 token_address,
-sum(value / 1e6) as total_usd_value
+{{ conversion('value', 6) }} as total_usd_value
 
 from 
     {{ ref('stg_token_transfers') }}
