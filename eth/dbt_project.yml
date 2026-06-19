@@ -32,3 +32,4 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   eth:
     +materialized: view
+    +tags: ['eth', 'crypto']

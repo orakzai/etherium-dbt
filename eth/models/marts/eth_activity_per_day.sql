@@ -1,3 +1,5 @@
+ {{ config(tags=['daily'] ) }}
+ 
  select 
 date,
 transaction_category,
