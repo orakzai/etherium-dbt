@@ -1,3 +1,5 @@
+{{ config(materialized='incremental', incremental_strategy='append')}}
+
 select 
 
 t.hash,
@@ -29,3 +31,8 @@ end as transaction_category
     group by transaction_hash
   ) tt
     on t.hash = tt.transaction_hash
+
+
+{% if is_incremental() %}
+    where date >= (select max(date) from {{this}} )
+{% endif %}
