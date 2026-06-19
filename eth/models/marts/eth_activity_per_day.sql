@@ -5,6 +5,6 @@ count(*) as tx_count,
 sum(value)/1e18 as sum_eth_value
 
  from 
- {{ ref("transactions_enriched") }}
+ {{ ref("int_transactions_enriched") }}
 
  group by date, transaction_category

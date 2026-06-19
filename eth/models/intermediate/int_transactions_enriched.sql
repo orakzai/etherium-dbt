@@ -1,5 +1,13 @@
 {{ config(materialized='incremental', incremental_strategy='append')}}
 
+
+with token_transfer_aggs as (
+    select transaction_hash, count(*) as token_transfers_count
+    from
+        {{ ref('stg_token_transfers') }}
+    group by transaction_hash)
+
+, transactions_encriched as (
 select 
 
 t.hash,
@@ -24,15 +32,12 @@ end as transaction_category
 
   left join 
    
-  (
-    select transaction_hash, count(*) as token_transfers_count
-    from
-        {{ ref('stg_token_transfers') }}
-    group by transaction_hash
-  ) tt
+token_transfer_aggs tt
     on t.hash = tt.transaction_hash
 
 
 {% if is_incremental() %}
     where date >= (select max(date) from {{this}} )
 {% endif %}
+)
+select * from transactions_encriched
