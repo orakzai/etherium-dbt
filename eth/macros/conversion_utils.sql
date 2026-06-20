@@ -6,6 +6,7 @@ sum({{column_name}})/1e18
 
 {%- macro conversion(column_name, factor) -%}
 
-sum({{column_name}})/1e{{factor}} 
+-- sum({{column_name}})/1e{{factor}} 
+sum( {{column_name }}/power(10, {{ factor}} ) )
 
 {%- endmacro -%}
