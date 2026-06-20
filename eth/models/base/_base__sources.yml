@@ -2,10 +2,17 @@ version: 2
 
 sources:
   - name: eth
+    # quoting: 
+      # database: true
+      # schema: true
     database: dp_eth
     schema: sch_eth  
     tables:
       - name: contracts
+        identifier: cnt
+        quoting: 
+          database: true
+          schema: true
       - name: token_transfers
       - name: transactions
 
