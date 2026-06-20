@@ -4,3 +4,10 @@ dbt run --empty
 dbt run --fail-fast
 
 -- flags can also be put in the project.yml file in the flags section
+
+dbt test
+
+
+
+dbt docs generate
+dbt docs serve
