@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: int_transactions_enriched
+    description: >
+      Intermediate table for the transactions to be enriched 
+      with extra info
