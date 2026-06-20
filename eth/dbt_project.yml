@@ -35,3 +35,17 @@ models:
   eth:
     +materialized: view
     +tags: ['eth', 'crypto']
+
+    marts:
+      +tags:
+        - report
+        - powerbi
+      +schema: mart
+
+seeds:
+  +database: dp_seed
+  +schema: sch_static
+
+vars:
+  token_address_var: '0x50327c6c5a14dcade707abad2e27eb517df87ab5'
+  token_decimals_var: 6
