@@ -11,3 +11,6 @@ dbt test
 
 dbt docs generate
 dbt docs serve
+
+-- put the csv file in the seeds direcotry
+dbt seeds 
