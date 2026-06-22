@@ -2,7 +2,9 @@
 
 -- {{ codegen.generate_model_yaml(model_names=['stg_transactions', 'stablecoin_activity_per_day'], upstream_descriptions=False, include_data_types=False)  }}
 
-select
-{{ dbt_utils.star(from=ref('stg_transactions'), quote_identifiers=False, except=['RECEIPT_CONTRACT_ADDRESS'], prefix='stg_') }}
+-- select
+-- {{ dbt_utils.star(from=ref('stg_transactions'), quote_identifiers=False, except=['RECEIPT_CONTRACT_ADDRESS'], prefix='stg_') }}
 
-from {{ ref('stg_transactions') }}
+-- from {{ ref('stg_transactions') }}
+
+{{ codegen.generate_model_yaml(model_names=['stablecoin_activity_per_day']) }}
