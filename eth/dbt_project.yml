@@ -50,6 +50,7 @@ models:
           - GRANT USAGE ON DATABASE DP_DBT TO ROLE BA;
           - GRANT USAGE ON SCHEMA DP_DBT.SCH_ALI_MART TO ROLE BA;
           - GRANT USAGE ON WAREHOUSE COMPUTE_WH TO ROLE BA;
+          - "{{ create_latest_version_view() }}"
         +grants:
           select: ['BA']
 
