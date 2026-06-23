@@ -1,0 +1,13 @@
+eth:
+  outputs:
+    ci:
+      account: GBGJTYS-DG86643
+      database: DP_CI
+      private_key_path: "{{ env_var('DBT_PRIVATE_KEY_PATH') }}"
+      role: ACCOUNTADMIN
+      schema: SCH_CI
+      threads: 1
+      type: snowflake
+      user: MALIORAKZAI
+      warehouse: COMPUTE_WH
+  target: ci
