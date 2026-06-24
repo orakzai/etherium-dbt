@@ -18,9 +18,15 @@ jobs:
       DBT_SNOWFLAKE_USER: ${{ secrets.DBT_SNOWFLAKE_USER }}
       DBT_SCHEMA: sch_pr_${{ github.event.pull_request.number }}
 
+    defaults:
+      run:
+        working-directory: eth
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0   # needed so we can access main too
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -40,13 +46,34 @@ jobs:
           chmod 600 ~/.dbt/rsa_key.p8
 
       - name: Install dbt deps
-        working-directory: eth
         run: dbt deps
 
       - name: Run dbt debug
-        working-directory: eth
         run: dbt debug --target ci
 
-      - name: Run dbt
-        working-directory: eth
-        run: dbt build --target ci
+      - name: Create state manifest from main
+        run: |
+          git checkout main
+          dbt deps
+          dbt parse --target prod
+          mkdir -p state
+          cp target/manifest.json state/manifest.json
+          git checkout -
+
+      # ---- Clone incrementals first (so is_incremental() is true) ----
+      - name: Clone impacted incremental models into PR schema
+        run: |
+          dbt clone \
+            --target ci \
+            --state ./state \
+            --defer \
+            --select "state:modified+,config.materialized:incremental,state:old"
+
+      # ---- Then slim build ----
+      - name: Slim build (modified + downstream)
+        run: |
+          dbt build \
+            --target ci \
+            --state ./state \
+            --defer \
+            --select "state:modified+"
