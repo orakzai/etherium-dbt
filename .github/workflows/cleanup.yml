@@ -40,6 +40,10 @@ jobs:
             cp .dbt/profiles.yml ~/.dbt/profiles.yml
             echo "$DBT_PRIVATE_KEY" > ~/.dbt/rsa_key.p8
             chmod 600 ~/.dbt/rsa_key.p8
+
+        - name: Install dbt deps
+          run: dbt deps
+
         - name: Cleanup
           run: |
             dbt run-operation pr_schema_cleanup --target ci --args "{'database_to_clean': 'DP_CI','age_in_days': -1}"
