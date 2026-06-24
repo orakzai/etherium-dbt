@@ -36,10 +36,13 @@ jobs:
           chmod 600 ~/.dbt/rsa_key.p8
 
       - name: Install dbt deps
+        working-directory: eth
         run: dbt deps
 
       - name: Run dbt debug
+        working-directory: eth
         run: dbt debug --target ci
 
       - name: Run dbt
+        working-directory: eth
         run: dbt build --target ci
